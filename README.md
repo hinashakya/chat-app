@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 💬 Fullstack Chat Application
 
 A real-time chat web application built with the MERN stack (MongoDB, Express, React, Node.js) that allows users to register, log in, upload profile images, and chat with other online users in real-time using Socket.IO.
@@ -87,3 +88,6 @@ npm run dev
 
 cd client
 npm run dev
+=======
+# chat-app
+>>>>>>> 38d0da1626d910bb7e43f2d1586a7a67702aaba3
