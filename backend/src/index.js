@@ -25,7 +25,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://your-deployment-url.com"],
+    // origin: ["http://localhost:5173", "https://your-deployment-url.com"],
+    origin:[process.env.CLIENT_URL],
     credentials: true,
   })
 );
