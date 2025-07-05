@@ -2,21 +2,19 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+
 import path from "path";
-import http from "http";
 
 import { connectDB } from "./lib/db.js";
+
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
-import { initSocket } from "./lib/socket.js";
+import { app, server } from "./lib/socket.js";
 
 dotenv.config();
-const PORT = process.env.PORT || 5000;
-const __dirname = path.resolve();
 
-const app = express();
-const server = http.createServer(app);
-initSocket(server); // 👈 Start socket with server
+const PORT = process.env.PORT;
+const __dirname = path.resolve();
 
 app.use(express.json());
 app.use(cookieParser());
@@ -39,6 +37,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 server.listen(PORT, () => {
-  console.log("Server running on port:", PORT);
+  console.log("server is running on PORT:" + PORT);
   connectDB();
 });
