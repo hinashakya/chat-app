@@ -26,7 +26,7 @@ export const getMessages = async (req, res) => {
         { senderId: myId, receiverId: userToChatId },
         { senderId: userToChatId, receiverId: myId },
       ],
-    }).lean(); // ✅ faster & lighter
+    });
 
     res.status(200).json(messages);
   } catch (error) {
@@ -43,14 +43,9 @@ export const sendMessage = async (req, res) => {
 
     let imageUrl;
     if (image) {
-      try {
-        // Upload base64 image to cloudinary
-        const uploadResponse = await cloudinary.uploader.upload(image);
-        imageUrl = uploadResponse.secure_url;
-      } catch (cloudErr) {
-        console.error("Cloudinary upload failed:", cloudErr.message);
-        return res.status(500).json({ error: "Image upload failed" });
-      }
+      // Upload base64 image to cloudinary
+      const uploadResponse = await cloudinary.uploader.upload(image);
+      imageUrl = uploadResponse.secure_url;
     }
 
     const newMessage = new Message({
@@ -63,7 +58,7 @@ export const sendMessage = async (req, res) => {
     await newMessage.save();
 
     const receiverSocketId = getReceiverSocketId(receiverId);
-    if (receiverSocketId && io) {
+    if (receiverSocketId) {
       io.to(receiverSocketId).emit("newMessage", newMessage);
     }
 
